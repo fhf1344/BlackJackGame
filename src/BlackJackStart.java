@@ -32,8 +32,8 @@ public class BlackJackStart {
 		int[] mb = new int[p];
 		String[][] mb_card = new String[p][12];
 		mb_mm = mm.fmb_money(p);
+		int hap = 0;
 		while(!allZeros) {
-			int hap = 0;
 			int[] mb_count = new int[p];
 			int[] mb_sum = new int[p];
 			
@@ -47,8 +47,8 @@ public class BlackJackStart {
 					if(mb[i] > 0) {
 						System.out.println((i+1) + "번째 참가자 베팅금액 : " + mb[i] + ", 남은 금액 : " + mb_mm[i]);
 					}
-					else {
-						System.out.println((i+1) + "번째 참가자 돈은 있지만 베팅하지 않음 " + ", 남은 금액 : " + mb_mm[i]);
+					else if(mb[i] == 0){
+						System.out.println((i+1) + "번째 참가자 베팅금액 현금액보다 초과하여 다음게임 참여하시오. " + ", 남은 금액 : " + mb_mm[i]);
 					}
 				}
 				else {
@@ -60,7 +60,7 @@ public class BlackJackStart {
 			mb_card = mb_result.getmb_card();
 			deal_card = deal_result.getdear_card();
 			card = mb_result.getcard();
-//			for(int i = 0; i < 4; i++) {
+//		for(int i = 0; i < 4; i++) {//전체 카드 보여주기
 //				for(int j = 0; j < 4; j++) {
 //					for(int k = 0; k < 13;k++) {
 //						System.out.print(card[i][j][k]); 
@@ -180,6 +180,9 @@ public class BlackJackStart {
 			for(int i = 0; i < 2 + d_count; i++) {
 				System.out.print(deal_card[i] + " ");;
 			}
+			if(d_sum > 21 ) {
+				System.out.println("dealer is Bust..(Winner Double the bet)");
+			}
 			System.out.println();
 			System.out.println("딜러 숫자 합 : " + d_sum);
 			for(int i = 0; i < p; i++) {
@@ -226,6 +229,14 @@ public class BlackJackStart {
 						allZeros = true;
 					}
 				}
+			}
+		}
+		for(int i = 0; i < 4; i++) {//전체 카드 보여주기
+			for(int j = 0; j < 4; j++) {
+				for(int k = 0; k < 13;k++) {
+					System.out.print(card[i][j][k]); 
+				}
+				System.out.println();
 			}
 		}
 		System.out.println("\n\n게임 종료\n\n");
@@ -352,6 +363,7 @@ class Betting{
 					System.out.println("가지고 계신 돈보다 더 많은 베팅금액을 입력하셨습니다. 다음 게임에 참여해주세요.");
 					mb_bet[i] = 0;
 				}
+				
 			}
 			else{
 				System.out.println((i+1) + "번째 참가자는 베팅금액이 없어서 참여 못합니다.");
